@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>30daycra</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body ng-app="cpi-app">
+    
+    <div ng-controller="AuthController">
+        <img src="../img/ajax-loader-bar.gif" class="pop-up-loader" ng-show="is_loading == true">
+
+        <div class="container h-100 loginPage" ng-if="!is_logged_in">
+            <div class="d-flex justify-content-center h-100">
+                <div class="user_card">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="brand_logo_container">
+                            <center>
+                                <img src="../img/logo_title.png" alt="Logo" class="brand_logo img-responsive mb-1">
+                                <div class="alert alert-default mb-2" ng-if="!callback.msg && !reset_password">Welcome, please sign in</div>
+                                <div class="alert alert-default mb-2" ng-if="!callback.msg && reset_password">Reset your password</div>
+                                <div class="alert mb-2" ng-class="(callback.success) ? 'alert-success' : 'alert-danger'" ng-show="callback.msg" ng-bind-html="callback.msg"></div>
+                            </center>
+                        </div>
+                    </div>
+
+                    <div class="login-container" ng-init="reset_password = false" ng-show="!reset_password">
+                        <div class="d-flex justify-content-center form_container">
+                            <form>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                    </div>
+                                    <input type="text" value="" name="" placeholder="Email" class="form-control" ng-model="auth.login.email">
+                                </div>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-append">
+                                            <span class="input-group-text">
+                                              <i class="fa fa-key" style="width: 12px"></i>
+                                            </span>
+                                    </div>
+                                    <input type="password" value="" name="" placeholder="Password" class="form-control" ng-model="auth.login.password">
+                                </div>
+
+                                <button type="button" name="button" class="btn col-sm-12 mb-3" ng-click="login()" ng-disabled="is_loading">Login</button>
+
+                                <a href="#" ng-click="reset_password = true; callback.msg = null" class="pull-right">Forgot password?</a>   
+                            </form>
+                        </div>                         
+                    </div>
+
+                    <div class="reset-password-container" ng-show="reset_password == true">
+                        <div class="d-flex justify-content-center form_container">
+                            <form>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                    </div>
+                                    <input type="email" id="reset-password-email" placeholder="Enter email" class="form-control" ng-model="auth.reset.email">
+                                </div> 
+
+                                <button type="button" name="button" class="btn btn-default col-sm-12 mb-2" ng-click="resetPassword()" ng-disabled="is_loading">Reset Password</button>   
+                                <button type="button" name="button" class="btn btn-danger col-sm-12" ng-click="reset_password = false; callback.msg = null" ng-disabled="is_loading">Cancel</button>                  
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <div id="response"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container h-100 logged-in-page" ng-if="is_logged_in">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <span><small>Mailing System :</small> <span class="badge badge-pill badge-success">{{ (auth.user.active_mail == 'lob') ? 'Lob' : 'Postalocity' }}</span></span>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <center>Welcome back, <span ng-bind="auth.user.name"></span></center>
+                </div>
+            </div>
+
+            <table class="table table-bordered">
+                <tr>
+                    <td align="center"><a href="#" class="settings">Dashboard</a></td>
+                    <td align="center"><a href="#" ng-click="logout()">Logout</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/c2m.js"></script>
+    <script src="../js/lob.js"></script>
+    <script src="../js/auto-selector.js"></script>    
+    <script src="popup.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!--YFS TOS-->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css" rel="stylesheet">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://app.30daycra.com/js/js-signature/jquery.signature.js"></script>
+
+<script>
+    var popupEnabled = true;
+
+    $(document).ready(function () {
+        var pageURL = window.location.href;
+
+        if (popupEnabled && (pageURL.indexOf('/courses/take/30dayCRAv3/') >= 0 || pageURL.indexOf('/courses/take/30dayCRAv3p/') >= 0)) {
+            let data = {};
+            if(localStorage.getItem("devtest")){
+                console.log('under test');
+                data = {
+                    email : 'senaidbacinovic@gmail.com',
+                    full_name : 'Test Name',
+                    id : '111222',
+                    data : {},
+                    tos_url : 'https://www.30daycra.com/30-day-agency-terms-of-service1589199091103'
+                };
+            }else {
+                data = window.Thinkific.current_user;
+                data.tos_url = 'https://www.30daycra.com/30-day-agency-terms-of-service1589199091103';
+            }
+
+            yfs.init(data);
+
+        }
+
+        $('body').on('click', '.accept-cb', function() {
+            $('.accept-btn').attr('disabled',!this.checked);
+            $('.tos-content-container').css({height : '65%' });
+            $('.clear-sig').show();
+            $("#ySig").show();
+
+            yfs.user_signature = $('#sig').signature({disabled : !this.checked});
+        });
+
+        $('body').on('click', '.accept-btn', function() {
+            $(this).prop('disabled', true);
+            yfs.accept();
+        });
+
+        $('body').on('click', '.clear-sig', function() {
+            yfs.user_signature.signature('clear');
+        });
+
+    });
+
+    var yfs = {
+        user_signature : null,
+        host_url : 'https://app.30daycra.com/',
+        tos_text : null,
+        tos_url : null,
+        properties : null,
+        init : function (data) {
+            this.properties = data;
+            this.tos_url = data.tos_url;
+            this.verify();
+        },
+        verify : function () {
+            $.ajax({
+                url: yfs.host_url+"action.php?entity=yfs_user&action=verify",
+                method: 'POST',
+                data : {
+                    id : yfs.properties.id
+                },
+                success: function(response){
+
+                    response = JSON.parse(response);
+
+                    if (!response.success) {
+                        yfs.showPopup();
+                    }
+
+                }
+            });
+        },
+        showPopup: function() {
+            $('.container, footer').hide();
+            $('body').addClass('popup-block');
+            $('body').prepend(yfs.terms_and_condition);
+        },
+        accept : function() {
+            var sig = yfs.user_signature.signature('toSVG');
+
+            if (yfs.user_signature.signature('isEmpty')) {
+                alert("Please sign your signature");
+            }else{
+
+                yfs.properties.signature = sig;
+
+                $.ajax({
+                    url: yfs.host_url+"action.php?entity=yfs_user&action=accept",
+                    method: 'POST',
+                    data : yfs.properties,
+                    success: function(response){
+
+                        response = JSON.parse(response);
+
+                        if (response.success) {
+                            window.location = window.location.href.replace('#','');
+                        }else{
+                            alert(response.msg);
+                        }
+                    }
+                });
+            }
+        },
+        sendEmail : function() {
+            $.ajax({
+                url: yfs.host_url+"action.php?entity=yfs_user&action=send_email",
+                method: 'POST',
+                data : {
+                    email : this.email,
+                },
+                success: function(response){
+                    if (response.success) {
+                        return true;
+                    }else{
+                        alert(response.msg);
+                    }
+                }
+            });
+        },
+        store_tos : function(tos) {
+            this.tos_text = tos;
+        },
+        terms_and_condition : function() {
+
+            return '<div class="terms_of_service_container">'+
+                '<div class="tos-content-container">' +
+                '<iframe src="'+yfs.tos_url+'" width="100%" height="100%" id="tosIframe"></iframe>'+
+                '</div>'+
+                '<div class="accept-container">'+
+                '<div class="accept-content">'+
+                '<div><input type="checkbox" class="accept-cb"> I accept the terms and services</div>'+
+                '<div id="ySig" style="display: none">Your Signature:<br></div><div id="sig"></div><button class="clear-sig">Clear</button>'+
+                '<button class="accept-btn" disabled>Accept</button>'+
+                '</div>'+
+                '</div>'+
+                '</div><style>#container-42304{display:none;}</style>';
+        }
+    }
+
+</script>
+<!--END YFS TOS-->

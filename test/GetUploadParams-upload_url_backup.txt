@@ -1,0 +1,24 @@
+         // ****UPLOAD PARAMS key:value****
+         // "url": "https://s3.amazonaws.com/DDNDEV",
+         // "key": "Jobs/8780/Uploads/${filename}",
+         // "Filename": "Jobs/8780/Uploads/${filename}",
+         // "acl": "private",
+         // "success_action_status": 201,
+         // "policy": "eyJleHBpcmF0aW9uIjoiMjAxNi0xMi0zMFQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJhY2wiOiJwcml2YXRlIn0seyJidWNrZXQiOiJERE5ERVYifSxbInN0YXJ0cy13aXRoIiwiJGtleSIsIkpvYnMvODc4MC9VcGxvYWRzLyJdLFsic3RhcnRzLXdpdGgiLCIkc3VjY2Vzc19hY3Rpb25fc3RhdHVzIiwiIl0sWyJzdGFydHMtd2l0aCIsIiRuYW1lIiwiIl0sWyJzdGFydHMtd2l0aCIsIiRGaWxlbmFtZSIsIiJdLHsieC1hbXotY3JlZGVudGlhbCI6IkFLSUFJWUhHWEtWSU9FM1ozTVhRLzIwMTYxMjI4L3VzLWVhc3QtMS9zMy9hd3M0X3JlcXVlc3QifSx7IngtYW16LWFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IngtYW16LURBVEUiOiIyMDE2MTIyOFQxMzQ0MzlaIn1dfQ==",
+         // "x_amz_algorithm": "AWS4-HMAC-SHA256",
+         // "x_amz_credential": "AKIAIYHGXKVIOE3Z3MXQ/20161228/us-east-1/s3/aws4_request",
+         // "x_amz_date": "20161228T134439Z",
+         // "x_amz_signature": "363e53ffa4781797f112a7cfd7f80c28394cbbdf48c0dc175e610eb1b8f4e922"
+         // ***************************
+         // ****EXAMPLE UPLOAD URL*****
+         // https://s3.amazonaws.com/DDNDEV/Test/postalocity-pdf-transform-test/1.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20161228T194447Z&X-Amz-SignedHeaders=host&X-Amz-Expires=59&X-Amz-Credential=AKIAJZTOCPZ5XA2JNAAA%2F20161228%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=abd73da80fe7cf765150462ab835ae25263097dc01942a2b91f970360856e519
+
+         
+
+         $file = str_replace('${filename}', $filename, $gup['key']);
+
+         $upload_url = $gup['url']."/".$file;
+         $upload_url .= "?X-Amz-Algorithm=".$gup['x_amz_algorithm'];
+         $upload_url .= "&X-Amz-Date=".$gup['x_amz_date'];
+         $upload_url .= "&X-Amz-SignedHeaders=host&X-Amz-Expires=59&X-Amz-Credential=".$gup['x_amz_credential'];
+         $upload_url .= "&X-Amz-Signature=".$gup['x_amz_signature'];

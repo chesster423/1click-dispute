@@ -1,0 +1,117 @@
+body {
+    margin-top: 15px;
+    width: 300px;
+    height: 300px;
+    background: #FFFFFF;
+    margin-bottom: 30px;
+}
+
+.login_btn {
+    padding: 5px 40px 5px 40px;
+    background-color: #2d8fcb;
+    color: white;
+}
+
+.brand_logo {
+    height: 100px;
+}
+
+.social_links > a {
+    padding: 20px 25px;
+    text-decoration: none;
+}
+
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+.social_links .fa-user {
+    background: #DB3023;
+    color: white;
+}
+
+.changePassword input {
+    margin-top:10px;
+}
+
+
+.pop-up-loader {
+	position: absolute;
+    top: -1px;
+    width: 108%;
+    height: 8px;
+    margin-left: -14px;
+}
+
+.hidden {
+	display: none;
+}
+
+/*Progress Bar*/
+.progress-bar {
+	width: 100%; 
+	background: #e4e4e4; 
+	height: 40px;
+	display: none;
+}
+
+.progress-bar .progress {
+	height: 40px;
+	position: absolute;
+	width: 0%;
+	background-color: #68c9ef;
+	transition: width .5s;
+}
+
+.progress-bar .progress-text{
+	color: #fff; 
+	font-size: 18px;
+	padding-left: 10px;
+	z-index: 9;
+	padding-top: 7px;
+	text-align: left;
+	position: absolute;
+	width: 100%;
+}
+
+.is_deleting::before {
+	content: "";
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: #FFFFFF;
+	opacity: .5;
+}
+
+.api-settings-badge {
+	padding: 0px 10px;
+    display: -webkit-inline-box;
+    width: fit-content;
+}
+
+.api-settings-badge p{
+	padding-top: 6px;
+	margin-bottom: 0;
+}
+
+.api-settings-badge p:hover{
+	cursor: pointer;
+	opacity: .7;
+}
+
+.api-settings-badge  button{
+	padding-left: 10px;
+	color: #FFFFFF;
+}
+
+.font-12 {
+	font-size: 12px !important;
+}
+
+.logged-in-page table {
+	position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 0;
+}

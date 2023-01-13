@@ -1,0 +1,27 @@
+{
+   "background": {
+      "scripts": ["js/background.js"]
+   },
+   "browser_action": {
+      "default_popup": "popup/popup.html",
+      "default_title": "YFS Academy Mailer"
+   },
+   "content_scripts": [
+      {
+         "run_at": "document_start",
+         "all_frames": true,
+         "js": [ "js/jquery.min.js", "js/script.js", "js/c2m.js","js/jquery-ui.min.js","js/jquery.iframe-transport.js","js/jquery.fileupload.js","js/lob.js", "js/select2.min.js","js/auto-selector.js"],
+         "matches": [ "*://app.creditrepaircloud.com/*" ]
+      }
+   ],
+   "description": "This tool helps with reducing manual labor and mail tasks",
+   "icons": {
+      "128": "icons/icon_128.png",
+      "48": "icons/icon_48.png"
+   },
+   "manifest_version": 2,
+   "name": "YFS Academy Mailer",
+   "permissions": [ "activeTab", "storage", "tabs", "webRequest", "webRequestBlocking", "*://app.creditrepaircloud.com/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.9.2"
+}
